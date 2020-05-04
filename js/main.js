@@ -19,7 +19,7 @@ button.click(function(query){
   console.log(query)
 
   $.ajax({
-        url: 'https://api.themoviedb.org/3/movie/550?api_key=222844e50d27287b88da26be96b19b31'+'&query='+ query ,
+        url: 'https://api.themoviedb.org/3/search/movie?api_key=222844e50d27287b88da26be96b19b31'+'&query='+ query ,
         method: 'GET',
         data: {
             title: query.title,
@@ -34,7 +34,7 @@ button.click(function(query){
 
        error: function() {
            console.log('Errore chiamata api');
-           
+
        }});
 
 })
