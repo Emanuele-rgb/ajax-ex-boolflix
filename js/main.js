@@ -11,24 +11,47 @@ $(document).ready(function () {
 
 
 }); // <-- End doc ready
+var source = $('#movie-template').html();
+var template = Handlebars.compile(source);
 var button = $(".button");
+var searchInput = $('#searchText');
+var movieList = $('#movie-list')
 
 
 button.click(function(query){
-  var query = document.getElementById('text').value;
+
+  var query = searchInput.val().trim()
+
   console.log(query)
 
   $.ajax({
-        url: 'https://api.themoviedb.org/3/search/movie?api_key=222844e50d27287b88da26be96b19b31'+'&query='+ query ,
+        url: 'https://api.themoviedb.org/3/search/movie',
         method: 'GET',
         data: {
-            title: query.title,
-            original_title: query.original_title,
-            original_language: query.original_language,
-            vote_average: query.vote_average
+            api_key: '222844e50d27287b88da26be96b19b31',
+            query: query,
+            language: 'it_IT'
+
         },
-        success: function(data) {
-          console.log(data)
+        success: function(response) {
+
+          var movies = response.results;
+
+          if(movies.length > 0) {
+
+            print(template, movies, movieList)
+
+          } else {
+            alert('Nessun film trovato')
+            searchInput.select()
+          }
+
+
+        console.log(response)
+        console.log(context)
+
+        //compilare e aggiungere template
+
         },
 
 
@@ -38,3 +61,30 @@ button.click(function(query){
        }});
 
 })
+
+
+
+function print(template, movies, container){
+
+  reset(container);
+
+  for(var i=0; i < movies.length; i++) {
+
+    var movie = movies[i];
+
+  var context = {
+    title: movie.title,
+    originalTitle: movie.original_title,
+    language: movie.original_language,
+    vote: movie.vote_average
+};
+
+
+var html = template(context);
+container.append(html);
+}
+}
+
+function reset(element){
+  element.html('');
+}

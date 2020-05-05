@@ -11,19 +11,25 @@
 
 
     <div class="container">
-      <input id="text" type="text" name="" value="">
+      <input id="searchText" type="text" name="" value="">
       <button class="button" type="button" name="button">Cerca</button>
+
+      <main id="movie-list"></main>
 
     </div>
 
 
 
     <!-- TEMPLATES HANDLEBARS -->
-    <script id="day-template" type="text/x-handlebars-template">
-        <li class="{{ title }}"></li>
-        <li class="{{ original_title }}"></li>
-        <li class="{{ original_language }}"></li>
-        <li class="{{ vote_average }}"></li>
+    <script id="movie-template" type="text/x-handlebars-template">
+      <div class="movie">
+      <ul>
+        <li class="">{{ title }}</li>
+        <li class="">{{ originalTitle }}</li>
+        <li class="">{{ language }}</li>
+        <li class="">{{ vote }}</li>
+      </ul>
+      </div>
     </script>
 
 
