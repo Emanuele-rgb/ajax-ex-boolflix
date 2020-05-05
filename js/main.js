@@ -48,7 +48,7 @@ button.click(function(query){
 
 
         console.log(response)
-        console.log(context)
+
 
         //compilare e aggiungere template
 
@@ -76,8 +76,15 @@ function print(template, movies, container){
     title: movie.title,
     originalTitle: movie.original_title,
     language: movie.original_language,
-    vote: movie.vote_average
+    vote: movie.vote_average,
+
+    votestars: getStars(movie.vote_average)
+
+
 };
+
+console.log(context)
+
 
 
 var html = template(context);
@@ -87,4 +94,20 @@ container.append(html);
 
 function reset(element){
   element.html('');
+}
+
+function getStars(vote_average){
+
+  var vote_rounded = Math.ceil(vote_average / 2)
+  console.log(vote_rounded)
+
+  for (var i = 0; i < vote_rounded; i++ ){
+    return '<i class="fas fa-star"></i>'.repeat(vote_rounded)
+
+
+
+  }
+
+
+
 }
