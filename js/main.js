@@ -76,6 +76,7 @@ function print(template, movies, container){
     title: movie.title,
     originalTitle: movie.original_title,
     language: movie.original_language,
+    languageFlag: getFlag(movie.original_language),
     vote: movie.vote_average,
 
     votestars: getStars(movie.vote_average)
@@ -103,11 +104,18 @@ function getStars(vote_average){
 
   for (var i = 0; i < vote_rounded; i++ ){
     return '<i class="fas fa-star"></i>'.repeat(vote_rounded)
-
-
-
   }
 
+}
 
+function getFlag(language){
+
+  if (language == 'it') {
+    return 'https://lh3.googleusercontent.com/proxy/GsH5PPOYQt9csNQriTJ1cfqAOagwpH75NrVQJPTtAptv7r7PQff0ufIaUQThyX4W442aOuC06mJiwRTAlnpws2pmRrcSTRMH2E0ZgBO0uxtYng_B5LYGmY5pGxlslQ'
+  } else if (language == 'en') {
+    return 'https://www.lamiaestate.it/wp-content/uploads/2019/01/Bandiera-Inglese.png'
+  } else {
+    return 'https://lh3.googleusercontent.com/proxy/Wdzech_d9l5i_D86Lho4hoi-NB1XOop1yOyhQSCGzS7aLFSmcNfft3mCkjjQaPEqoUi5jc2wT3cKCIBgHBXKu2giH7VwUUmeZkGc1bt4lmB61cc'
+  }
 
 }
