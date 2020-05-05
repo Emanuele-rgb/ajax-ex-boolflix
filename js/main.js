@@ -79,7 +79,8 @@ function print(template, movies, container){
     languageFlag: getFlag(movie.original_language),
     vote: movie.vote_average,
 
-    votestars: getStars(movie.vote_average)
+    votestars: getStars(movie.vote_average),
+    votestarsMiss: getMissStars(movie.vote_average)
 
 
 };
@@ -104,6 +105,17 @@ function getStars(vote_average){
 
   for (var i = 0; i < vote_rounded; i++ ){
     return '<i class="fas fa-star"></i>'.repeat(vote_rounded)
+  }
+
+}
+
+function getMissStars(vote_average){
+
+  var vote_rounded = Math.ceil(vote_average / 2)
+  console.log(vote_rounded)
+
+  for (var i = 0; i < vote_rounded; i++ ){
+    return '<i class="far fa-star"></i>'.repeat(5-vote_rounded)
   }
 
 }
