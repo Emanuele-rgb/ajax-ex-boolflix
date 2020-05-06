@@ -126,7 +126,8 @@ function print(template, movies, container, type){
     vote: movie.vote_average,
     votestars: getStars(movie.vote_average),
     type: type,
-    poster: getPoster(movie.poster_path)
+    poster: getPoster(movie.poster_path),
+    overview: (movie.overview)
 
 };
 
@@ -183,5 +184,12 @@ function getFlag(language){
 
 function getPoster(poster) {
 
+  console.log(poster)
+
+  if (poster == null) {
+    return '<img src="img/no-poster.png" alt="">';
+  } else {
+
   return '<img src=' + 'https://image.tmdb.org/t/p/' + '/w342' + poster +'>';
+}
 }

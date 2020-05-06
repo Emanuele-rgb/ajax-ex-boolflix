@@ -13,25 +13,36 @@
 
 
     <div class="container">
-      <input id="searchText" type="text" name="" value="">
-      <button class="button" type="button" name="button">Cerca</button>
+      <div class="top-bar">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcR1-h-Ofl8qt2aUuWOh9z9KjtQxT9Eys2WkzD79JS7QE0kBYe6d&usqp=CAU" alt="">
+        <div class="search-box">
+          <input id="searchText" type="text" name="" value="">
+          <button class="button" type="button" name="button">Cerca</button>
+        </div>
 
+      </div>
+
+      <div class="catalogue">
+        <span><h2>Il tuo catalogo:</h2></span>
+      </div>
       <main id="movie-list"></main>
 
     </div>
 
 
 
+
     <!-- TEMPLATES HANDLEBARS -->
     <script id="movie-template" type="text/x-handlebars-template">
       <div class="movie">
-        <div class="poster"> {{{ poster }}}
+        <div class="poster" id="poster-img"> {{{ poster }}}
       <ul>
         <li class="">{{ title }}</li>
         <li class="">{{ originalTitle }}</li>
-        <li class="language"> {{{ languageFlag }}} </li>
+        <li id="language"> {{{ languageFlag }}} </li>
         <li class="">{{{ votestars }}}</li>
         <li class="">{{ type }}</li>
+        <li class="">{{ overview }}</li>
       </ul>
       </div>
       </div>

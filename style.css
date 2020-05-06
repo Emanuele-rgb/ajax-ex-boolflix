@@ -1,27 +1,67 @@
-.container {
-  max-width: 1200px;
+body {
+  background-color: #151017;
+}
+.movie #language img{
+  height: 50px;
 }
 
-.movie .language img{
-  height: 50px;
+.top-bar {
+  height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #151017;
+}
+
+.catalogue {
+  color: #C33328;
+  margin-left: 200px;
+}
+
+.top-bar #searchText{
+  margin-top: 30px;
+  width: 300px;
+  height: 40px;
+  font-size: 20px;
+}
+
+.top-bar .button {
+  margin-right: 300px;
+  height: 30px;
 }
 
 #movie-list {
   display: flex;
-
+  flex-wrap: wrap;
+  max-width: 1600px;
+  margin-top: 100px;
+  margin-left: 200px;
+  margin-right: 200px;
 }
 
 .movie {
+  margin-left: 10px;
+  margin-top: 10px;
   display: flex;
+  height: 516px;
+  width: 344px;
+  overflow: hidden;
 }
 
 .poster  {
+  background-size:contain;
   position: relative;
+}
+
+#poster-img img {
+  height: 100%;
+  background-size: cover;
 }
 
 .poster ul {
   position: absolute;
-  top :10px
+  top :10px;
+  padding-right: 30px;
 }
 
 .poster {
