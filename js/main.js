@@ -127,7 +127,7 @@ function print(template, movies, container, type){
     votestars: getStars(movie.vote_average),
     type: type,
     poster: getPoster(movie.poster_path),
-    overview: (movie.overview)
+    overview: substring(movie.overview)
 
 };
 
@@ -192,4 +192,13 @@ function getPoster(poster) {
 
   return '<img src=' + 'https://image.tmdb.org/t/p/' + '/w342' + poster +'>';
 }
+}
+
+function substring(overview) {
+
+  var str = overview;
+  var res = str.substr(0, 250);
+
+  return res + '...Read more';
+
 }
