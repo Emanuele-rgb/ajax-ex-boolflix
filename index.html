@@ -25,12 +25,15 @@
     <!-- TEMPLATES HANDLEBARS -->
     <script id="movie-template" type="text/x-handlebars-template">
       <div class="movie">
+        <div class="poster"> {{{ poster }}}
       <ul>
         <li class="">{{ title }}</li>
         <li class="">{{ originalTitle }}</li>
-        <li class=""> <img src="{{{ languageFlag }}}" alt="">   </li>
-        <li class="">{{{ votestars }}}{{{ votestarsMiss }}}</li>
+        <li class="language"> {{{ languageFlag }}} </li>
+        <li class="">{{{ votestars }}}</li>
+        <li class="">{{ type }}</li>
       </ul>
+      </div>
       </div>
     </script>
 

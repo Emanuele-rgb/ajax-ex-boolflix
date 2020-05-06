@@ -1,3 +1,54 @@
-.movie img {
+.container {
+  max-width: 1200px;
+}
+
+.movie .language img{
   height: 50px;
+}
+
+#movie-list {
+  display: flex;
+
+}
+
+.movie {
+  display: flex;
+}
+
+.poster  {
+  position: relative;
+}
+
+.poster ul {
+  position: absolute;
+  top :10px
+}
+
+.poster {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  color: white;
+}
+.poster:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 0.8s;
+  opacity: 0;
+  background: black;
+  background-size: 100% 100%;
+}
+.poster:hover:before {
+  opacity: 0.8;
+}
+.poster li {
+  display: none;
+}
+.poster:hover li {
+  transition: all 0.8s;
+  display: block;
 }

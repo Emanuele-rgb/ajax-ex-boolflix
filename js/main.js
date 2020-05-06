@@ -20,6 +20,8 @@ var movieList = $('#movie-list')
 
 button.click(function(query){
 
+  reset(movieList);
+
   var query = searchInput.val().trim()
 
   console.log(query)
@@ -31,7 +33,6 @@ button.click(function(query){
             api_key: '222844e50d27287b88da26be96b19b31',
             query: query,
             language: 'it_IT'
-
         },
         success: function(response) {
 
@@ -39,7 +40,7 @@ button.click(function(query){
 
           if(movies.length > 0) {
 
-            print(template, movies, movieList)
+            print(template, movies, movieList, 'Film')
 
           } else {
             alert('Nessun film trovato')
@@ -60,28 +61,72 @@ button.click(function(query){
 
        }});
 
+    $.ajax({
+          url: 'https://api.themoviedb.org/3/search/tv',
+          method: 'GET',
+          data: {
+              api_key: '222844e50d27287b88da26be96b19b31',
+              query: query,
+              language: 'it_IT'
+          },
+          success: function(response) {
+
+            var movies = response.results;
+
+            if(movies.length > 0) {
+
+              print(template, movies, movieList, 'Tv')
+
+            } else {
+              alert('Nessuna serie tv trovata')
+              searchInput.select()
+            }
+
+
+          console.log(response)
+
+
+          //compilare e aggiungere template
+
+          },
+
+
+         error: function() {
+             console.log('Errore chiamata api');
+
+         }});
+
 })
 
 
 
-function print(template, movies, container){
+function print(template, movies, container, type){
 
-  reset(container);
+
 
   for(var i=0; i < movies.length; i++) {
 
     var movie = movies[i];
 
+    var title, originalTitle
+
+    if (type == 'Film') {
+      title = movie.title;
+      originalTitle = movie.original_title;
+    } else if (type == 'Tv') {
+      title = movie.name;
+      originalTitle = movie.original_name;
+    }
+
   var context = {
-    title: movie.title,
-    originalTitle: movie.original_title,
+    title: title,
+    originalTitle: originalTitle,
     language: movie.original_language,
     languageFlag: getFlag(movie.original_language),
     vote: movie.vote_average,
-
     votestars: getStars(movie.vote_average),
-    votestarsMiss: getMissStars(movie.vote_average)
-
+    type: type,
+    poster: getPoster(movie.poster_path)
 
 };
 
@@ -101,33 +146,42 @@ function reset(element){
 function getStars(vote_average){
 
   var vote_rounded = Math.ceil(vote_average / 2)
+
+  stars ='';
+
   console.log(vote_rounded)
 
-  for (var i = 0; i < vote_rounded; i++ ){
-    return '<i class="fas fa-star"></i>'.repeat(vote_rounded)
-  }
+  for (var i = 1; i <= 5; i++ ){
+    if (i <= vote_rounded){
+      stars +='<i class="fas fa-star"></i>';
+    } else {
+      stars +='<i class="far fa-star"></i>';
+    }
 
+  }
+return stars
 }
 
-function getMissStars(vote_average){
 
-  var vote_rounded = Math.ceil(vote_average / 2)
-  console.log(vote_rounded)
-
-  for (var i = 0; i < vote_rounded; i++ ){
-    return '<i class="far fa-star"></i>'.repeat(5-vote_rounded)
-  }
-
-}
 
 function getFlag(language){
 
-  if (language == 'it') {
-    return 'https://lh3.googleusercontent.com/proxy/GsH5PPOYQt9csNQriTJ1cfqAOagwpH75NrVQJPTtAptv7r7PQff0ufIaUQThyX4W442aOuC06mJiwRTAlnpws2pmRrcSTRMH2E0ZgBO0uxtYng_B5LYGmY5pGxlslQ'
-  } else if (language == 'en') {
-    return 'https://www.lamiaestate.it/wp-content/uploads/2019/01/Bandiera-Inglese.png'
-  } else {
-    return 'https://lh3.googleusercontent.com/proxy/Wdzech_d9l5i_D86Lho4hoi-NB1XOop1yOyhQSCGzS7aLFSmcNfft3mCkjjQaPEqoUi5jc2wT3cKCIBgHBXKu2giH7VwUUmeZkGc1bt4lmB61cc'
-  }
+  var languages = [
+    'en',
+    'it'
+  ];
 
+  if (languages.includes(language)) {
+
+    var flag = '<img src="img/' + language + '.svg" alt"' + language + '"class="language" />';
+
+    return flag;
+
+}
+  return language;
+}
+
+function getPoster(poster) {
+
+  return '<img src=' + 'https://image.tmdb.org/t/p/' + '/w342' + poster +'>';
 }
