@@ -1,6 +1,4 @@
-/**
- * WELCOME TO MOMENT JS
- */
+
 $(document).ready(function () {
 
     /**
@@ -19,91 +17,79 @@ var movieList = $('#movie-list')
 
 
 button.click(function(query){
+  search(searchInput, template, movieList)
+})
 
-  reset(movieList);
+searchInput.keypress(function(event){
+  if(event.which == 13) {
+    search(searchInput, template, movieList)
+  }
+});
 
-  var query = searchInput.val().trim()
 
-  console.log(query)
 
+function search(searchInput, template, movieList){
+
+    reset(movieList);
+
+    var apiKey = '222844e50d27287b88da26be96b19b31'
+    var apiLang = 'it-IT'
+
+    var query = searchInput.val().trim()
+
+    console.log(query)
+
+    var dataMovie = {
+      url: 'https://api.themoviedb.org/3/search/movie',
+      key: apiKey,
+      query: query,
+      language: apiLang,
+      type: 'Film'
+    }
+    getData(dataMovie, template, movieList)
+
+    var dataSerie = {
+      url: 'https://api.themoviedb.org/3/search/tv',
+      key: apiKey,
+      query: query,
+      language: apiLang,
+      type: 'Tv'
+    }
+    getData(dataSerie, template, movieList)
+}
+
+
+
+
+function getData(dataMovie, template, movieList){
   $.ajax({
-        url: 'https://api.themoviedb.org/3/search/movie',
+        url: dataMovie.url,
         method: 'GET',
         data: {
-            api_key: '222844e50d27287b88da26be96b19b31',
-            query: query,
-            language: 'it_IT'
+            api_key: dataMovie.key,
+            query: dataMovie.query,
+            language: dataMovie.lang
         },
         success: function(response) {
 
           var movies = response.results;
 
           if(movies.length > 0) {
-
-            print(template, movies, movieList, 'Film')
-
+            print(template, movies, movieList, dataMovie.type)
           } else {
-            alert('Nessun film trovato')
+            alert('Nessun contenuto trovato')
             searchInput.select()
           }
-
-
         console.log(response)
-
-
         //compilare e aggiungere template
-
         },
-
-
        error: function() {
            console.log('Errore chiamata api');
-
        }});
-
-    $.ajax({
-          url: 'https://api.themoviedb.org/3/search/tv',
-          method: 'GET',
-          data: {
-              api_key: '222844e50d27287b88da26be96b19b31',
-              query: query,
-              language: 'it_IT'
-          },
-          success: function(response) {
-
-            var movies = response.results;
-
-            if(movies.length > 0) {
-
-              print(template, movies, movieList, 'Tv')
-
-            } else {
-              alert('Nessuna serie tv trovata')
-              searchInput.select()
-            }
-
-
-          console.log(response)
-
-
-          //compilare e aggiungere template
-
-          },
-
-
-         error: function() {
-             console.log('Errore chiamata api');
-
-         }});
-
-})
-
+}
 
 
 function print(template, movies, container, type){
-
-
-
   for(var i=0; i < movies.length; i++) {
 
     var movie = movies[i];
@@ -129,15 +115,13 @@ function print(template, movies, container, type){
     poster: getPoster(movie.poster_path),
     overview: substring(movie.overview)
 
-};
+    };
 
-console.log(context)
+    console.log(context)
 
-
-
-var html = template(context);
-container.append(html);
-}
+    var html = template(context);
+    container.append(html);
+  }
 }
 
 function reset(element){
@@ -147,7 +131,6 @@ function reset(element){
 function getStars(vote_average){
 
   var vote_rounded = Math.ceil(vote_average / 2)
-
   stars ='';
 
   console.log(vote_rounded)
@@ -158,7 +141,6 @@ function getStars(vote_average){
     } else {
       stars +='<i class="far fa-star"></i>';
     }
-
   }
 return stars
 }
